@@ -5,8 +5,9 @@ services:
     environment:
       - cluster.name=opensearch-cluster
       - node.name=opensearch-node1
-      - discovery.seed_hosts=opensearch-node1
-      - cluster.initial_cluster_manager_nodes=opensearch-node1
+      - discovery.type=single-node
+#      - discovery.seed_hosts=opensearch-node1
+#      - cluster.initial_cluster_manager_nodes=opensearch-node1
       - bootstrap.memory_lock=true
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
       - "DISABLE_INSTALL_DEMO_CONFIG=true"
@@ -23,8 +24,15 @@ services:
     ports:
       - 9200:9200 # REST API
       - 9600:9600 # Performance Analyzer
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-fsS", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s" ]
+      interval: 10s
+      timeout: 3s
+      retries: 30
     networks:
       - opensearch-net
+#
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:latest
     container_name: opensearch-dashboards
@@ -37,6 +45,15 @@ services:
       - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true"
     networks:
       - opensearch-net
+    depends_on:
+      opensearch-node1:
+          condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5601/api/status"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+#
   opensearch-data-prepper:
     image: opensearchproject/data-prepper:latest
     container_name: opensearch-data-prepper
@@ -47,7 +64,14 @@ services:
       - 2021:2021
     networks:
       - opensearch-net
-    depends_on: ["opensearch-node1"]
+    depends_on:
+      opensearch-node1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:2021/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
 
 volumes:
   opensearch-data1:

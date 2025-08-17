@@ -7,7 +7,6 @@
     <list default="true" id="176f1c97-173f-48b1-b131-5ac68971441f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opensearch/podman-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/opensearch/podman-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/oci_audit_to_ingest.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/oci_audit_to_ingest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
