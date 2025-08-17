@@ -1,0 +1,21 @@
+oci_logs:
+  workers: 2 # the number of workers
+  delay: 5000 # in milliseconds, how long workers wait between read attempts
+  source:
+    http:
+      authentication:
+        unauthenticated:
+      port: 2021
+      path: /log/ingest
+      health_check_service: true
+  processor:
+    - date:
+        match:
+          - key: "timestamp"
+            patterns: ["epoch_milli"]
+        destination: "@timestamp"
+  sink:
+    - opensearch:
+        hosts: ["http://opensearch-node1:9200"]
+        index: oci_audit_logs
+        bulk_size: 5000

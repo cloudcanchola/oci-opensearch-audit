@@ -1,0 +1,16 @@
+.env
+/config/.env
+container.sh
+.idea/*
+#
+.idea
+
+.venv
+
+# Ignore Python cache directories
+__pycache__/
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+

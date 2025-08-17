@@ -1,0 +1,24 @@
+GET {{host}}/oci_audit_logs/_search
+Content-Type: application/json
+
+{
+  "query":{
+    "match_all": {
+      
+    }
+  }
+}
+
+###
+
+# Delete Index
+DELETE {{host}}/oci_audit_logs
+
+###
+
+# Data logs requests
+GET {{host}}/opensearch_dashboards_sample_data_logs/_search
+
+### 
+ 
+
