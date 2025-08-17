@@ -41,8 +41,8 @@ services:
     image: opensearchproject/data-prepper:latest
     container_name: opensearch-data-prepper
     volumes:
-      - ./pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
-      - ./data-prepper-config.yaml:/usr/share/data-prepper/config/data-prepper-config.yaml
+      - ./pipelines.yml:/usr/share/data-prepper/pipelines/pipelines.yml
+      - ./data-prepper-config.yml:/usr/share/data-prepper/config/data-prepper-config.yml
     ports:
       - 2021:2021
     networks:
